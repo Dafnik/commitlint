@@ -1,8 +1,8 @@
 name: 'commitlint'
 author: 'Dafnik'
-description: 'A simple action which runs the commitlint CLI Check'
+description: 'A simple GitHub action to run commitlint CLI Checks.'
 branding:
-  icon: 'mail'
+  icon: 'git-commit'
   color: 'purple'
 
 inputs:
@@ -21,9 +21,9 @@ runs:
     - name: Validate current commit (last commit) with commitlint
       shell: bash
       if: github.event_name == 'push'
-      run: npm exec commitlint --from HEAD~1 --to HEAD --verbose
+      run: commitlint --from HEAD~1 --to HEAD --verbose
 
     - name: Validate PR commits with commitlint
       shell: bash
       if: github.event_name == 'pull_request'
-      run: npm exec commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
+      run: commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose

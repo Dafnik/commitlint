@@ -1,12 +1,13 @@
 # commitlint
 
-A GitHub action to run commitlint CLI Checks.
+A simple GitHub action to run commitlint CLI Checks.
 
 ## Usage
 
 ```yml
 jobs:
   commitlint:
+    name: Commitlint Check
     runs-on: ubuntu-latest
     steps:
       # For getting the commitlint config
