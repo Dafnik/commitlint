@@ -1,6 +1,12 @@
 # commitlint
 
-A simple GitHub action to run commitlint CLI Checks.
+A simple GitHub action to run [`@commitlint/cli`](https://www.npmjs.com/package/@commitlint/cli) checks.
+
+Following commits are linted based on the action `event_name`.
+- `push`: The last commit
+  - from `HEAD~1` to `HEAD`
+- `pull_request`
+  - from `${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }}` to `${{ github.event.pull_request.head.sha }}`
 
 ## Usage
 
@@ -10,7 +16,7 @@ jobs:
     name: Commitlint Check
     runs-on: ubuntu-latest
     steps:
-      # For getting the commitlint config
+      # Needed to get the commitlint config
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
@@ -23,9 +29,9 @@ jobs:
 ```
 
 <!-- prettier-ignore-start -->
-| Inputs               | Required | Description                  |
-|----------------------|----------|------------------------------|
-| `commitlint_version` |          | Version of commitlint to use |
+| Inputs               | Default value | Description                  |
+|----------------------|---------------|------------------------------|
+| `commitlint_version` | `latest`      | Custom version of commitlint |
 <!-- prettier-ignore-end -->
 
 Furthermore, see [action.yml](action.yml)

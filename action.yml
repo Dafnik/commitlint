@@ -1,6 +1,6 @@
-name: 'commitlint'
+name: 'commitlint-cli-action'
 author: 'Dafnik'
-description: 'A simple GitHub action to run commitlint CLI Checks.'
+description: 'A simple GitHub action to run @commitlint/cli checks.'
 branding:
   icon: 'git-commit'
   color: 'purple'
