@@ -14,8 +14,16 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Cache commitlint
+      id: cache-commitlint
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-commitlint-cache@${{ inputs.commitlint_version }}
+
     - name: Installing commitlint
       shell: bash
+      if: steps.cache-commitlint.outputs.cache-hit != 'true'
       run: npm install --global commitlint@${{ inputs.commitlint_version }} @commitlint/config-conventional
 
     - name: Validate current commit (last commit) with commitlint
