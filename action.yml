@@ -25,6 +25,31 @@ runs:
       shell: bash
       run: npm install --global commitlint@${{ inputs.commitlint_version }} @commitlint/config-conventional
 
+    - name: Check if commitlint.config.js exists
+      shell: bash
+      id: check-file
+      run: |
+        if [ -f commitlint.config.js ]; then
+          echo "exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "exists=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Installing @commitlint/config-conventional
+      shell: bash
+      if: steps.check-file.outputs.exists == 'false'
+      run: npm install --global @commitlint/config-conventional
+
+    - name: Creating commitlint.config.js
+      shell: bash
+      if: steps.check-file.outputs.exists == 'false'
+      run: |
+        echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js
+
+    - name: Verify commitlint.config.js content
+      shell: bash
+      run: cat commitlint.config.js
+
     - name: Validate current commit (last commit) with commitlint
       shell: bash
       if: github.event_name == 'push'

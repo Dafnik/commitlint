@@ -3,6 +3,7 @@
 A simple GitHub action to run [`@commitlint/cli`](https://www.npmjs.com/package/@commitlint/cli) checks.
 
 Following commits are linted based on the action `event_name`.
+
 - `push`: The last commit
   - from `HEAD~1` to `HEAD`
 - `pull_request`
@@ -20,13 +21,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-           fetch-depth: 0
+          fetch-depth: 0
 
       - name: Run commitlint
         uses: dafnik/commitlint@v1
-        with:
+        #with:
           #commitlint_version: 'latest'
 ```
+
+If the action doesn't find a `commitlint.config.js` it's going to install
+[`@commitlint/config-conventional`](https://www.npmjs.com/package/@commitlint/config-conventional) and create a pre-generated `commitlint.config.js`.
 
 <!-- prettier-ignore-start -->
 | Inputs               | Default value | Description                  |
